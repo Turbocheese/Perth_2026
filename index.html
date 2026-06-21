@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Perth Journal — Winter Expedition '26</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --paper: #FBF8F2;
+  --paper-deep: #F3ECDD;
+  --ink: #1B2A41;
+  --ink-soft: #475569;
+  --line: #E6DDC8;
+  --card: #FFFFFF;
+
+  /* category colors */
+  --c-food: #C44536;       /* coral */
+  --c-food-bg: #FBEAE6;
+  --c-explore: #2F6B4F;    /* eucalyptus */
+  --c-explore-bg: #E7F0EA;
+  --c-shop: #8E5BA8;       /* plum */
+  --c-shop-bg: #F1E7F5;
+  --c-drive: #5B8AA6;      /* sky */
+  --c-drive-bg: #E6EFF3;
+  --c-home: #D9772C;       /* ochre */
+  --c-home-bg: #FBEEE0;
+  --c-booking: #B9912C;    /* gold */
+  --c-booking-bg: #FAF1DD;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.6;
+  padding-bottom: 4rem;
+}
+
+/* texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(27,42,65,0.035) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== HEADER ===== */
+header {
+  position: relative;
+  padding: 3.2rem 1.5rem 1.8rem;
+  text-align: center;
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--paper) 100%);
+  border-bottom: 3px solid var(--ink);
+  overflow: hidden;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, var(--c-home-bg) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+header .edition {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--c-home);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+header .edition::before, header .edition::after {
+  content: '✦';
+  font-size: 0.6rem;
+  opacity: 0.6;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.3rem, 8vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  position: relative;
+}
+
+header h1 em {
+  font-style: italic;
+  color: var(--c-explore);
+}
+
+header p.subtitle {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  margin: 0.4rem 0 1.4rem;
+}
+
+.header-stats {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.hstat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  border-radius: 30px;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+}
+
+.hstat i { font-size: 0.8rem; }
+.hstat.c-departure { border-color: var(--c-home); color: var(--c-home); }
+.hstat.c-people { border-color: var(--c-explore); color: var(--c-explore); }
+.hstat.c-distance { border-color: var(--c-drive); color: var(--c-drive); }
+
+/* ===== WEATHER STRIP ===== */
+.weather-strip {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.7rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  text-align: center;
+  flex-wrap: wrap;
+}
+.weather-strip i { color: #FFD580; }
+.weather-strip b { color: #FFD580; }
+
+/* ===== FILTER BAR ===== */
+.filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: rgba(251, 248, 242, 0.97);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.day-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 0.9rem 1.25rem 0.6rem;
+  gap: 0.6rem;
+  scrollbar-width: none;
+}
+.day-carousel::-webkit-scrollbar { display: none; }
+
+.nav-pill {
+  background: var(--card);
+  border: 2px solid var(--line);
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.3;
+}
+.nav-pill span { font-size: 0.62rem; font-weight: 500; opacity: 0.7; }
+
+.nav-pill.active {
+  background: var(--ink);
+  color: #FFF;
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(27,42,65,0.25);
+}
+.nav-pill.active span { opacity: 0.85; color: #FFD580; }
+
+.category-filters {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 1.25rem 0.9rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.category-filters::-webkit-scrollbar { display: none; }
+
+.cat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.35rem 0.7rem;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1.5px solid transparent;
+  opacity: 0.45;
+  transition: all 0.15s ease;
+  filter: grayscale(0.4);
+}
+.cat-chip.active { opacity: 1; filter: none; border-color: currentColor; }
+.cat-chip:hover { opacity: 0.8; }
+
+.cat-chip.food { background: var(--c-food-bg); color: var(--c-food); }
+.cat-chip.explore { background: var(--c-explore-bg); color: var(--c-explore); }
+.cat-chip.shop { background: var(--c-shop-bg); color: var(--c-shop); }
+.cat-chip.drive { background: var(--c-drive-bg); color: var(--c-drive); }
+.cat-chip.home { background: var(--c-home-bg); color: var(--c-home); }
+.cat-chip.booking { background: var(--c-booking-bg); color: var(--c-booking); }
+
+/* ===== MAIN ===== */
+.journal-container {
+  padding: 1.8rem 1.25rem;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.day-hero {
+  margin-bottom: 1.4rem;
+}
+
+.day-hero .meta-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--c-home);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.day-hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.9rem;
+}
+
+/* day stat strip — signature element */
+.day-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.day-stat-box {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 0.7rem 0.5rem;
+  text-align: center;
+}
+
+.day-stat-box .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  display: block;
+}
+
+.day-stat-box .lbl {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.day-stat-box.highlight .num { color: var(--c-food); }
+.day-stat-box.highlight2 .num { color: var(--c-drive); }
+
+/* ===== TIMELINE ===== */
+.story-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.story-timeline::before {
+  content: '';
+  position: absolute;
+  left: 27px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, var(--line) 0, var(--line) 6px, transparent 6px, transparent 12px);
+  z-index: 0;
+}
+
+.story-node {
+  display: flex;
+  gap: 0.9rem;
+  position: relative;
+}
+
+.node-marker {
+  flex-shrink: 0;
+  width: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.3rem;
+  z-index: 1;
+}
+
+.node-icon-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  border: 2.5px solid var(--card);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.node-card {
+  flex: 1;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-left: 5px solid var(--ink);
+  border-radius: 12px;
+  padding: 1.1rem 1.2rem;
+  box-shadow: 0 3px 14px rgba(27,42,65,0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.node-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(27,42,65,0.09);
+}
+
+/* category coloring */
+.node-icon-circle.food { background: var(--c-food); color: #fff; }
+.node-card.food { border-left-color: var(--c-food); }
+.node-icon-circle.explore { background: var(--c-explore); color: #fff; }
+.node-card.explore { border-left-color: var(--c-explore); }
+.node-icon-circle.shop { background: var(--c-shop); color: #fff; }
+.node-card.shop { border-left-color: var(--c-shop); }
+.node-icon-circle.drive { background: var(--c-drive); color: #fff; }
+.node-card.drive { border-left-color: var(--c-drive); }
+.node-icon-circle.home { background: var(--c-home); color: #fff; }
+.node-card.home { border-left-color: var(--c-home); }
+.node-icon-circle.booking { background: var(--c-booking); color: #fff; }
+.node-card.booking { border-left-color: var(--c-booking); }
+
+.node-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.node-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.node-tag {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  padding: 0.22rem 0.55rem;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.node-tag.food { background: var(--c-food-bg); color: var(--c-food); }
+.node-tag.explore { background: var(--c-explore-bg); color: var(--c-explore); }
+.node-tag.shop { background: var(--c-shop-bg); color: var(--c-shop); }
+.node-tag.drive { background: var(--c-drive-bg); color: var(--c-drive); }
+.node-tag.home { background: var(--c-home-bg); color: var(--c-home); }
+.node-tag.booking { background: var(--c-booking-bg); color: var(--c-booking); }
+
+.node-body {
+  font-size: 0.95rem;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.node-duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin-top: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.node-tip, .node-fact, .node-alt {
+  margin-top: 0.6rem;
+  padding: 0.6rem 0.7rem;
+  font-size: 0.83rem;
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+.node-tip { background: #F4F8FA; border-left: 3px solid var(--c-drive); color: var(--ink-soft); }
+.node-fact { background: #F6F2F8; border-left: 3px solid var(--c-shop); color: var(--ink-soft); font-style: italic; }
+.node-alt { background: #FEF6E9; border-left: 3px solid var(--c-home); color: var(--ink); }
+
+.node-tip i, .node-fact i, .node-alt i { margin-right: 4px; }
+
+.node-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.4rem 0.7rem;
+  border-radius: 7px;
+  cursor: pointer;
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.action-btn:hover {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.action-btn.copied {
+  background: var(--c-explore);
+  color: #fff;
+  border-color: var(--c-explore);
+}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1.4rem;
+  border-top: 2px dashed var(--line);
+}
+
+.nav-arrow-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 9px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.nav-arrow-btn:hover { background: var(--c-home); transform: translateY(-1px); }
+.nav-arrow-btn.invisible { visibility: hidden; }
+
+/* ===== PACKING / BRIEFING ===== */
+.briefing-section {
+  margin-top: 3.5rem;
+  border-top: 3px solid var(--ink);
+  padding-top: 2rem;
+}
+
+.briefing-section h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.briefing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.briefing-card {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 1.3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.briefing-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+}
+.briefing-card.b-drive::before { background: var(--c-drive); }
+.briefing-card.b-fly::before { background: var(--c-home); }
+.briefing-card.b-bag::before { background: var(--c-shop); }
+.briefing-card.b-weather::before { background: var(--c-explore); }
+
+.briefing-card h4 {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.6rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.briefing-card p { font-size: 0.92rem; line-height: 1.65; color: var(--ink); }
+.briefing-card p strong { color: var(--ink); }
+
+@media (min-width: 768px) {
+  .briefing-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* packing checklist feature */
+.packing-toggle-btn {
+  margin-top: 1rem;
+  width: 100%;
+  background: var(--c-explore);
+  color: #fff;
+  border: none;
+  padding: 0.9rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.packing-toggle-btn:hover { background: #245a40; }
+
+.packing-list {
+  display: none;
+  margin-top: 1rem;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+}
+.packing-list.open { display: block; }
+
+.packing-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--line);
+  cursor: pointer;
+  font-size: 0.88rem;
+}
+.packing-item:last-child { border-bottom: none; }
+.packing-checkbox {
+  width: 18px; height: 18px;
+  border: 2px solid var(--line);
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.packing-item.checked .packing-checkbox { background: var(--c-explore); border-color: var(--c-explore); }
+.packing-item.checked .packing-checkbox::after { content: '✓'; color: #fff; font-size: 11px; }
+.packing-item.checked span.plabel { text-decoration: line-through; opacity: 0.5; }
+
+/* progress badge */
+.progress-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 50px;
+  padding: 0.7rem 1.1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(27,42,65,0.3);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.progress-fab i { color: #FFD580; }
+
+@media (max-width: 480px) {
+  .day-stats { grid-template-columns: repeat(3, 1fr); }
+  header h1 { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <span class="edition"><i class="fa-solid fa-feather"></i>Exclusive Family Manifest</span>
+    <h1>The Perth <em>Journal</em></h1>
+    <p class="subtitle">“Winter” Expedition '26 · Margaret River & Perth City</p>
+    <div class="header-stats">
+        <div class="hstat c-departure" id="clock"><i class="fa-solid fa-plane-departure"></i> Initialising…</div>
+        <div class="hstat c-people"><i class="fa-solid fa-users"></i> Nic · Sue · Ryan · Russ · Ceci</div>
+        <div class="hstat c-distance"><i class="fa-solid fa-route"></i> 11 Days · 2 Cities</div>
+    </div>
+</header>
+
+<div class="weather-strip" id="weatherStrip">
+    <i class="fa-solid fa-cloud-sun"></i> Loading WA winter outlook…
+</div>
+
+<div class="filter-bar">
+    <div class="day-carousel" id="carouselContainer"></div>
+    <div class="category-filters" id="categoryFilters"></div>
+</div>
+
+<div class="journal-container">
+    <div class="day-hero">
+        <span id="heroDate" class="meta-date"></span>
+        <h2 id="heroTitle"></h2>
+        <div class="day-stats" id="dayStats"></div>
+    </div>
+
+    <div class="story-timeline" id="nodesContainer"></div>
+
+    <div class="bottom-nav">
+        <button class="nav-arrow-btn" id="prevBtn"><i class="fa-solid fa-arrow-left"></i> Prev Day</button>
+        <button class="nav-arrow-btn" id="nextBtn">Next Day <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <div class="briefing-section">
+        <h3><i class="fa-solid fa-clipboard-list" style="color:var(--c-home)"></i> Manifest Logistics</h3>
+        <div class="briefing-grid">
+            <div class="briefing-card b-fly">
+                <h4 style="color:var(--c-home)"><i class="fa-solid fa-plane"></i> Flight Manifest</h4>
+                <p><strong>Outbound:</strong> Scoot TR8 (SIN→PER)<br>PNR: BYLSMW | Seats: 17K, 17J, 17H, 18J, 18H<br><br><strong>Return:</strong> Scoot TR17 (PER→SIN)<br>PNR: GB3MMW | Seats: 17A, 17B, 17C, 18B, 18C</p>
+            </div>
+            <div class="briefing-card b-drive">
+                <h4 style="color:var(--c-drive)"><i class="fa-solid fa-car"></i> Transport Procurement</h4>
+                <p><strong>H20 Car Rentals Perth</strong><br>Kia Carnival MUV — Booking Ref #3761<br>Liaison: Steven Yii (+61 490 438035)</p>
+            </div>
+            <div class="briefing-card b-bag">
+                <h4 style="color:var(--c-shop)"><i class="fa-solid fa-suitcase-rolling"></i> Baggage Weight Strategy</h4>
+                <p>Outbound: 20kg per passenger.<br>Inbound: Nic, Russ & Ryan 25kg | Sue 30kg.</p>
+            </div>
+            <div class="briefing-card b-weather">
+                <h4 style="color:var(--c-explore)"><i class="fa-solid fa-temperature-low"></i> Winter Travel Fact</h4>
+                <p>June/July is winter in WA. Temps range 8–19°C. Bring layers and a waterproof jacket for coastal walks!</p>
+            </div>
+        </div>
+
+        <button class="packing-toggle-btn" id="packingToggle"><i class="fa-solid fa-suitcase"></i> Open Smart Packing Checklist</button>
+        <div class="packing-list" id="packingList"></div>
+    </div>
+</div>
+
+<div class="progress-fab" id="progressFab"><i class="fa-solid fa-check-circle"></i> <span id="progressText">0 stops logged</span></div>
+
+<script>
+const dynamicItinerary = [
+    {
+        day: 1, date: "26 JUN (FRI)", title: "Transit Corridor & Southern Drive", weather: "16°C · Clear skies for arrival",
+        items: [
+            { time: "09:00 AM", desc: "Dispatch coordination: Arrange 2x taxis to Changi Airport.", tag: "drive", icon: "fa-taxi", duration: "30 mins" },
+            { time: "09:30 AM", desc: "Arrive Changi Terminal T1 for Scoot flight check-in.", tag: "drive", icon: "fa-plane-departure", duration: "2.5 hours" },
+            { time: "12:00 PM", desc: "Flight TR8 departs Singapore (SIN) for Western Australia.", tag: "drive", icon: "fa-plane", duration: "5h 10m", fact: "Scoot's TR8 is a popular route connecting the Lion City to the Sunset State." },
+            { time: "05:10 PM", desc: "Touch down at Perth International Airport Terminal T1.", tag: "drive", icon: "fa-plane-arrival", duration: "15 mins" },
+            { time: "05:25 PM", desc: "Clear Customs, collect luggage, and pick up the Kia Carnival from H20 Car Rentals.", tag: "drive", icon: "fa-car-side", duration: "1h 20m", tip: "Perth Airport T1 is the main international gateway. Keep your passports handy!", address: "Perth Airport T1" },
+            { time: "07:15 PM", desc: "Commence highway transit to Margaret River (total drive approx. 3h 15m).", tag: "drive", icon: "fa-road", duration: "1 hour" },
+            { time: "08:00 PM", desc: "Stop in Mandurah for Grill'd burgers, to go. Eat in the car.", address: "Grill'd Mandurah, 31 Mandurah Terrace, Mandurah WA 6210", tag: "food", icon: "fa-burger", duration: "30 mins", tip: "Try the 'Garden Goodness' or 'Crispy Bacon & Cheese'!" },
+            { time: "08:00 PM", desc: "Continue toward Margaret River, check in at the Airbnb Apartment.", address: "Apartment No. 4, 16 Town View Terrace, Margaret River WA 6285", tag: "home", icon: "fa-house", duration: "2h 10m", fact: "The drive south passes through the Tuart Forest, home to some of the rarest trees in the world." }
+        ]
+    },
+    {
+        day: 2, date: "27 JUN (SAT)", title: "Provisions, Lighthouses & Caves", weather: "13°C · 40% chance of rain — alt plans noted below",
+        items: [
+            { time: "08:00 AM", desc: "Wake up and get ready to head out to Margaret River Farmers Market.", tag: "home", icon: "fa-mug-hot", duration: "1 hour" },
+            { time: "09:00 AM", desc: "Breakfast & picnic basket shopping at Margaret River Farmers Market.", address: "Lot 272 Bussell Hwy, Margaret River WA 6285", tag: "food", icon: "fa-carrot", duration: "1h 45m", tip: "No dogs allowed. Arrive early for the best produce and breakfast stalls!", fact: "This market has been a local staple for over 20 years.", alt: "Wet weather alternative: 10:45 AM head towards Cape Leeuwin Lighthouse, stopping at Augusta Bakery (30 mins) for a quick pie lunch — 121 Blackwood Ave, Augusta WA 6290." },
+            { time: "10:45 AM", desc: "Drive to the continent's tip: Cape Leeuwin Lighthouse grounds for a walk and picnic.", address: "Leeuwin Rd, Augusta WA 6290", tag: "explore", icon: "fa-tower-observation", duration: "2h 45m", tip: "176 steps to the top. Minimum age 4 for the tower climb.", fact: "The tallest lighthouse on mainland Australia — marks where the Indian and Southern Oceans meet.", alt: "If it's raining, skip the Lighthouse and head straight to Jewel Cave instead." },
+            { time: "01:30 PM", desc: "Explore the Jewel Cave formations.", address: "Jewel Caves Rd, Deepdene WA 6290", tag: "explore", icon: "fa-gem", duration: "1 hour", tip: "Guided tours only. Constant 17°C inside — bring a light jacket.", fact: "The largest show cave in WA, with fossils of the extinct Tasmanian Tiger!" },
+            { time: "03:50 PM", desc: "Grocery run at Woolworths and refreshments at BWS.", address: "49 Town View Terrace, Margaret River WA 6285", tag: "shop", icon: "fa-cart-shopping", duration: "55 mins" },
+            { time: "04:45 PM", desc: "Top up fuel at Shell.", address: "78 Bussell Hwy, Margaret River WA 6285", tag: "drive", icon: "fa-gas-pump", duration: "30 mins" },
+            { time: "05:15 PM", desc: "Laundry window.", tag: "home", icon: "fa-shirt", duration: "5 mins" },
+            { time: "05:20 PM", desc: "Sue's workout window (concludes 6:15 PM).", tag: "home", icon: "fa-person-running", duration: "55 mins" },
+            { time: "07:15 PM", desc: "Stroll to dinner at Swings & Roundabouts. Table for 5.", address: "85 Bussell Hwy, Margaret River WA 6285", tag: "booking", icon: "fa-utensils", duration: "1.5 hours", tip: "Known for its relaxed vibe and wood-fired pizzas.", alt: "Drive out instead if it's too cold to walk." }
+        ]
+    },
+    {
+        day: 3, date: "28 JUN (SUN)", title: "Witchcliffe Vintage Trail & Caves", weather: "12°C · Mostly cloudy",
+        items: [
+            { time: "08:30 AM", desc: "Quick breakfast and get ready for 10 AM Mass.", tag: "home", icon: "fa-mug-hot", duration: "1h 10m" },
+            { time: "09:40 AM", desc: "Depart for morning Mass.", address: "Augusta Margaret River Catholic Parish, Cnr Wallcliffe Rd & Farrelly St, Margaret River WA 6285", tag: "explore", icon: "fa-church", duration: "1h 35m" },
+            { time: "11:15 AM", desc: "After Mass, drive to Witchcliffe for an early lunch at Dear Darnell's.", address: "3 Redgate Rd, Witchcliffe WA 6286", tag: "food", icon: "fa-bowl-food", duration: "1.5 hours" },
+            { time: "12:45 PM", desc: "Vintage shopping loop: Beanhead Records, LucyKat, Poolroom Vintage, The Tiny Store, The Flying Wardrobe, Lime Beach Reloved.", address: "10399 Bussell Hwy, Witchcliffe WA 6286", tag: "shop", icon: "fa-shirt", duration: "1h 45m", tip: "Perfect for finding unique WA treasures and vintage vinyl." },
+            { time: "02:30 PM", desc: "Coffee pause at Witchy Brews café.", address: "3 Redgate Rd, Witchcliffe WA 6286", tag: "food", icon: "fa-mug-saucer", duration: "30 mins" },
+            { time: "03:00 PM", desc: "Self-guided walk inside Mammoth Cave.", address: "Caves Rd, Forest Grove WA 6286", tag: "explore", icon: "fa-mountain", duration: "1.5 hours", tip: "Audio-guided tour. The first chamber is fully accessible.", fact: "One of the few caves you can explore at your own pace with an audio guide." },
+            { time: "04:30 PM", desc: "Wine tasting at Mr Barval Fine Wines.", address: "7087 Caves Rd, Margaret River WA 6286", tag: "food", icon: "fa-wine-glass", duration: "1.5 hours", fact: "Margaret River produces 20% of Australia's premium wine with only 3% of the grapes!" },
+            { time: "06:00 PM", desc: "Laundry cycle.", tag: "home", icon: "fa-shirt", duration: "15 mins" },
+            { time: "06:15 PM", desc: "Collect takeaway dinner from Hooked Up Fish & Chips.", address: "Surfers Point Rd, Prevelly WA 6285", tag: "food", icon: "fa-fish", duration: "45 mins", tip: "Eat at Surfers Point to watch the sunset over the Indian Ocean!" },
+            { time: "07:00 PM", desc: "Casual evening dinner back at the apartment.", tag: "home", icon: "fa-utensils", duration: "1.5 hours" }
+        ]
+    },
+    {
+        day: 4, date: "29 JUN (MON)", title: "Yallingup Sweets & Dunsborough Books", weather: "14°C · Sunny intervals",
+        items: [
+            { time: "09:30 AM", desc: "Breakfast at Gourmet Food Merchant.", address: "4 Bottrill St, Cowaramup WA 6284", tag: "food", icon: "fa-bagel", duration: "1h 10m" },
+            { time: "10:40 AM", desc: "Chocolate & olive oil run: Gabriel Chocolate, Margaret River Chocolate, Wulura Olive Oil.", address: "219 Harmans Mill Rd, Metricup WA 6280", tag: "shop", icon: "fa-cookie-bite", duration: "1h 10m", tip: "Gabriel Chocolate is bean-to-bar — don't miss the dark chocolate!" },
+            { time: "11:50 AM", desc: "Lunch at Wild Hop Brewing Company.", address: "1301 Wildwood Rd, Yallingup WA 6282", tag: "food", icon: "fa-beer-mug-empty", duration: "1h 40m", tip: "Bookings essential. Menu changes seasonally.", fact: "Famous for shared-style rotisserie meats and craft beers." },
+            { time: "01:30 PM", desc: "Explore Dunsborough: Lions Shed, Cape Emporium, Dunsborough Books.", address: "6 Eyre St, Dunsborough WA 6281", tag: "shop", icon: "fa-book", duration: "1h 15m", tip: "Dunsborough is a trendy coastal town with great boutique shopping." },
+            { time: "02:45 PM", desc: "Devonshire Tea & Scones at Cape Lavender.", address: "2 Canal Rocks Rd, Yallingup WA 6282", tag: "food", icon: "fa-mug-hot", duration: "1.5 hours", tip: "Try the lavender-infused scones!" },
+            { time: "04:15 PM", desc: "Grocery run at Woolworths for tonight's dinner.", address: "49 Town View Terrace, Margaret River WA 6285", tag: "shop", icon: "fa-cart-shopping", duration: "1 hour" },
+            { time: "05:15 PM", desc: "Wine pickup at Margaret River Liquor Merchants.", address: "110 Bussell Hwy, Margaret River WA 6285", tag: "shop", icon: "fa-wine-bottle", duration: "25 mins" },
+            { time: "05:40 PM", desc: "Laundry cycle.", tag: "home", icon: "fa-shirt", duration: "10 mins" },
+            { time: "05:50 PM", desc: "Sue's workout window (concludes 6:40 PM).", tag: "home", icon: "fa-person-running", duration: "50 mins" },
+            { time: "07:00 PM", desc: "Family dinner — cook together, set the table, crack a bottle.", tag: "home", icon: "fa-utensils", duration: "2 hours" },
+            { time: "09:00 PM", desc: "First round of bag packing before leaving for Perth City.", tag: "home", icon: "fa-suitcase-rolling", duration: "1 hour" }
+        ]
+    },
+    {
+        day: 5, date: "30 JUN (TUE)", title: "Northern Capes & Busselton Jetty", weather: "13°C · Coastal breeze",
+        items: [
+            { time: "09:00 AM", desc: "Coffee and toasties at Red Feather Coffee.", address: "35 Bussell Hwy, Cowaramup WA 6284", tag: "food", icon: "fa-mug-saucer", duration: "1 hour" },
+            { time: "10:00 AM", desc: "Explore Cowaramup: Mukau Giftware, Candy Cow, Temper Temper Chocolate.", address: "69 Bussell Highway, Cowaramup WA 6284", tag: "shop", icon: "fa-candy-cane", duration: "1 hour", tip: "Look for the 'Cow-town' statues — 42 life-sized fiberglass cows!", fact: "Cowaramup gets its name from the Aboriginal word for the Purple-crowned Lorikeet." },
+            { time: "11:00 AM", desc: "Wine & gin tastings at After Hours Wine / Gindong Gin.", address: "455 N Jindong Rd, North Jindong WA 6280", tag: "food", icon: "fa-martini-glass", duration: "1h 15m" },
+            { time: "12:15 PM", desc: "Lunch at Origins Market Busselton food court.", address: "86 West St, Busselton WA 6280", tag: "food", icon: "fa-bowl-food", duration: "1h 45m", tip: "Great place to find local honey, preserves, and crafts." },
+            { time: "02:00 PM", desc: "Walk the historic Busselton Jetty.", address: "17 Foreshore Parade, Busselton WA 6280", tag: "explore", icon: "fa-water", duration: "1 hour", tip: "$5 entry fee. 1.8km long — longest wooden piled jetty in the Southern Hemisphere!", fact: "152 years old and has survived multiple fires and cyclones." },
+            { time: "03:00 PM", desc: "Drop Russ & Ceci at Busselton Books, others relax at The Good Egg Café.", address: "38/44 Albert St, Busselton WA 6280", tag: "shop", icon: "fa-book-open", duration: "1 hour" },
+            { time: "04:00 PM", desc: "Grocery stop at Woolworths Busselton Kent St.", address: "59-65 Kent St, Busselton WA 6280", tag: "shop", icon: "fa-cart-shopping", duration: "1 hour" },
+            { time: "05:00 PM", desc: "Fuel top-up at BP Busselton.", address: "24 Albert St, Busselton WA 6280", tag: "drive", icon: "fa-gas-pump", duration: "1h 10m" },
+            { time: "06:10 PM", desc: "Pack bags ahead of tomorrow's move to Perth.", tag: "home", icon: "fa-suitcase-rolling", duration: "1h 5m" },
+            { time: "07:15 PM", desc: "Dinner reservation at Burger Baby Margaret River.", address: "2 Andrews Way, Margaret River WA 6285", tag: "booking", icon: "fa-burger", duration: "1.5 hours" }
+        ]
+    },
+    {
+        day: 6, date: "01 JUL (WED)", title: "Northbound Return to Perth City", weather: "15°C · Light drizzle possible inland",
+        items: [
+            { time: "09:10 AM", desc: "Load the Kia Carnival; exit the Margaret River region.", tag: "drive", icon: "fa-car-side", duration: "10 mins" },
+            { time: "09:20 AM", desc: "Drive-by brekkie at Red Feather Coffee.", address: "35 Bussell Hwy, Cowaramup WA 6284", tag: "food", icon: "fa-mug-saucer", duration: "55 mins" },
+            { time: "10:15 AM", desc: "Wildlife stop at Bunbury Wildlife Park.", address: "7 Prince Philip Dr, South Bunbury WA 6230", tag: "explore", icon: "fa-paw", duration: "2 hours", tip: "You can hand-feed kangaroos and see over 60 native species!" },
+            { time: "12:15 PM", desc: "Lunch at Bunbury Ramen Plus.", address: "Shop 6/33 Clifton St, Bunbury WA 6230", tag: "food", icon: "fa-bowl-rice", duration: "1.5 hours" },
+            { time: "01:45 PM", desc: "Cheese & ice cream stop at Harvey Cheese.", address: "11442 S Western Hwy, Wokalup WA 6221", tag: "food", icon: "fa-ice-cream", duration: "1.5 hours", tip: "Try the award-winning Halloumi or Camel Milk cheese!" },
+            { time: "03:15 PM", desc: "Browse Blue Moon Collectables Pinjarra.", address: "Unit 1/5742 S Western Hwy, Pinjarra WA 6208", tag: "shop", icon: "fa-clock-rotate-left", duration: "2 hours", fact: "Pinjarra is one of the oldest towns in WA, established 1834." },
+            { time: "05:15 PM", desc: "Check in to Airbnb 2.", address: "15B Esperance St, East Victoria Park WA 6101", tag: "home", icon: "fa-house", duration: "1h 15m" },
+            { time: "06:30 PM", desc: "Collect takeaway South Perth Fish & Chips and Charcoal Chicken.", address: "256 Mill Point Rd, South Perth WA 6151", tag: "food", icon: "fa-drumstick-bite", duration: "30 mins" },
+            { time: "07:00 PM", desc: "Family dinner — set the table, crack a bottle, wait for everyone.", tag: "home", icon: "fa-utensils", duration: "2 hours" }
+        ]
+    },
+    {
+        day: 7, date: "02 JUL (THU)", title: "River Rapids Hiking & Valley Crafts", weather: "11°C · Crisp & clear — great hiking weather",
+        items: [
+            { time: "09:00 AM", desc: "Drive-thru coffee then River Walk & Goat Trail at Bells Rapids Park.", address: "Orlov Trail, Cathedral Ave, Brigadoon WA 6069", tag: "explore", icon: "fa-person-hiking", duration: "2h 50m", tip: "Goat Walk is ~3km, takes 1–1.5 hours. Watch for kangaroos at dawn!", fact: "A world-class vantage point for the annual Avon Descent white-water race." },
+            { time: "11:50 AM", desc: "Clean shoes of trail mud before getting back in the car.", tag: "drive", icon: "fa-boot", duration: "10 mins" },
+            { time: "12:00 PM", desc: "Pizza lunch at Gerry's Deli & Pizzeria.", address: "10250 W Swan Rd, Henley Brook WA 6055", tag: "food", icon: "fa-pizza-slice", duration: "1.5 hours" },
+            { time: "01:30 PM", desc: "Browse The Barn @ Taylor's antiques.", address: "George Rd, Middle Swan WA 6056", tag: "shop", icon: "fa-clock-rotate-left", duration: "30 mins" },
+            { time: "02:00 PM", desc: "Wine tasting at Garbin Estate Wines.", address: "209 Toodyay Rd, Middle Swan WA 6056", tag: "food", icon: "fa-wine-glass", duration: "45 mins", fact: "The Swan Valley is the oldest wine region in Western Australia." },
+            { time: "02:45 PM", desc: "More antiquing at Annie's COLLECTIVE Wonderland.", address: "22-24 Clayton St, Bellevue WA 6056", tag: "shop", icon: "fa-clock-rotate-left", duration: "45 mins" },
+            { time: "03:30 PM", desc: "Guildford strolls: Georges Furniture Restoration, Guildford Book Exchange.", address: "189 James St, Guildford WA 6055", tag: "shop", icon: "fa-book", duration: "50 mins", tip: "Guildford is a National Trust town with 19th-century architecture." },
+            { time: "04:20 PM", desc: "Grocery run at Woolworths Perth Airport.", address: "10 High St, Perth Airport WA 6105", tag: "shop", icon: "fa-cart-shopping", duration: "40 mins" },
+            { time: "05:00 PM", desc: "Fuel top-up at Costco Wholesale Fuel.", address: "142 Dunreath Dr, Perth Airport WA 6105", tag: "drive", icon: "fa-gas-pump", duration: "50 mins" },
+            { time: "05:50 PM", desc: "Laundry cycle.", tag: "home", icon: "fa-shirt", duration: "1h 10m" },
+            { time: "07:00 PM", desc: "Dinner at Izakaya Tori Victoria Park.", address: "610 Albany Hwy, Victoria Park WA 6100", tag: "booking", icon: "fa-utensils", duration: "2 hours" }
+        ]
+    },
+    {
+        day: 8, date: "03 JUL (FRI)", title: "Port Fremantle Record & Brew Strolls", weather: "16°C · Mild, perfect for walking",
+        items: [
+            { time: "09:40 AM", desc: "Breakfast at Eggspot Fremantle (standing format!).", address: "71 Parry St, Fremantle WA 6160", tag: "food", icon: "fa-egg", duration: "35 mins" },
+            { time: "10:15 AM", desc: "Coffee browsing at The Coffee Connection.", address: "South Terrace & Henderson St, Fremantle WA 6160", tag: "food", icon: "fa-mug-saucer", duration: "15 mins" },
+            { time: "10:30 AM", desc: "Fremantle culture walk: Mills Records, High Street Mall, Elizabeth's Secondhand Bookshop.", address: "22 Adelaide St, Fremantle WA 6160", tag: "shop", icon: "fa-record-vinyl", duration: "1h 45m", fact: "Fremantle has the best-preserved 19th-century port streetscape in the world." },
+            { time: "12:15 PM", desc: "Burgers at Grill'd Fremantle.", address: "South Terrace Corner, Collie St, Fremantle WA 6160", tag: "food", icon: "fa-burger", duration: "1.5 hours" },
+            { time: "01:45 PM", desc: "Print & design crawl: Common Ground, Ginger Pudding Vintage, Bill Campbell Books, The Record Finder.", address: "61 High St, Fremantle WA 6160", tag: "shop", icon: "fa-shirt", duration: "1h 15m", tip: "Fremantle ('Freo') is famous for its eclectic, bohemian vibe." },
+            { time: "03:00 PM", desc: "Cuppa break at Common Bakery Fremantle.", address: "19 High St, Fremantle WA 6160", tag: "food", icon: "fa-bread-slice", duration: "1 hour" },
+            { time: "04:00 PM", desc: "Pints at Little Creatures Brewery.", address: "40 Mews Rd, Fremantle WA 6160", tag: "food", icon: "fa-beer-mug-empty", duration: "2h 20m", tip: "Where the Little Creatures legend began. Can get busy on weekends!", fact: "The Port Authority building nearby has the city's best view — 11 storeys high." },
+            { time: "06:20 PM", desc: "Dinner with Shirley & Daniel at Jumbo BBQ Roast Duck House.", address: "2/1140 Albany Hwy, Bentley WA 6102", tag: "booking", icon: "fa-drumstick-bite", duration: "2 hours" }
+        ]
+    },
+    {
+        day: 9, date: "04 JUL (SAT)", title: "Subiaco Mornings & Fruit Orchards", weather: "14°C · Partly sunny",
+        items: [
+            { time: "09:00 AM", desc: "Breakfast & coffee at Subiaco Farmers Market.", address: "271 Bagot Rd, Subiaco WA 6008", tag: "food", icon: "fa-carrot", duration: "1.5 hours", fact: "Subiaco ('Subi') is one of Perth's most trendy and affluent suburbs." },
+            { time: "10:30 AM", desc: "Strawberry picking at Hoang Le's Strawberries.", address: "120 Trichet Rd, Wanneroo WA 6065", tag: "explore", icon: "fa-seedling", duration: "1h 45m", tip: "Check their socials for daily picking conditions before you go!" },
+            { time: "12:15 PM", desc: "Lunch at Pink Moon & Co.", address: "Shop 16/12 Harrison St, Balcatta WA 6021", tag: "food", icon: "fa-bowl-food", duration: "1h 45m" },
+            { time: "02:00 PM", desc: "Retail therapy for Sue at Karrinyup Shopping Centre (Lululemon, Lorna Jane, Uniqlo).", address: "200 Karrinyup Rd, Karrinyup WA 6018", tag: "shop", icon: "fa-bag-shopping", duration: "1h 45m", tip: "Karrinyup is one of Perth's premier shopping destinations." },
+            { time: "03:45 PM", desc: "Dinner groceries from Woolworths Karrinyup.", address: "200 Karrinyup Rd, Karrinyup WA 6018", tag: "shop", icon: "fa-cart-shopping", duration: "1h 35m" },
+            { time: "05:20 PM", desc: "Laundry cycle.", tag: "home", icon: "fa-shirt", duration: "10 mins" },
+            { time: "05:30 PM", desc: "Sue's workout hour (concludes 6:20 PM).", tag: "home", icon: "fa-person-running", duration: "50 mins" },
+            { time: "07:00 PM", desc: "Home cooked dinner with select open wine.", tag: "home", icon: "fa-utensils", duration: "2 hours" },
+            { time: "09:00 PM", desc: "First round of suitcase packing.", tag: "home", icon: "fa-suitcase-rolling", duration: "1 hour" }
+        ]
+    },
+    {
+        day: 10, date: "05 JUL (SUN)", title: "Sunday Parish & Seaside Farewells", weather: "15°C · Gentle sea breeze",
+        items: [
+            { time: "09:00 AM", desc: "Attend Sunday Parish Mass.", address: "5 Ingham Ct, Willetton WA 6155", tag: "explore", icon: "fa-church", duration: "1 hour" },
+            { time: "10:00 AM", desc: "Breakfast at Freo Farmers Market.", address: "Bruce Lee Oval, 5 Caesar St, Beaconsfield WA 6162", tag: "food", icon: "fa-carrot", duration: "2 hours", tip: "A great alternative to the main Fremantle Markets for a local feel." },
+            { time: "12:00 PM", desc: "Final vintage stop: The Gossamer Project.", address: "266 South Terrace, South Fremantle WA 6162", tag: "shop", icon: "fa-shirt", duration: "30 mins" },
+            { time: "12:30 PM", desc: "Seafood lunch on the sand at The Pickled Octopus Food Truck.", address: "Dog Beach, Fremantle WA 6162", tag: "food", icon: "fa-shrimp", duration: "1.5 hours", tip: "Dog Beach is great for people-watching (and dog-watching)!" },
+            { time: "02:00 PM", desc: "Final fuel top-off at Shell Bentley.", address: "1128 Albany Hwy, Bentley WA 6102", tag: "drive", icon: "fa-gas-pump", duration: "1 hour" },
+            { time: "03:00 PM", desc: "Churros & chocolate at San Churro East Victoria Park.", address: "848 Albany Hwy, East Victoria Park WA 6101", tag: "food", icon: "fa-cookie", duration: "1h 15m" },
+            { time: "04:15 PM", desc: "Final suitcase compression round.", tag: "home", icon: "fa-suitcase-rolling", duration: "1 hour" },
+            { time: "05:15 PM", desc: "Sue's final workout block (dispose of gloves post-session).", tag: "home", icon: "fa-person-running", duration: "1.5 hours" },
+            { time: "06:45 PM", desc: "Finale dinner at Salt & Pepper Grill. Table for 5.", address: "55 George St, Kensington WA 6151", tag: "booking", icon: "fa-champagne-glasses", duration: "2 hours", tip: "A perfect spot for a final celebratory meal before heading home." }
+        ]
+    },
+    {
+        day: 11, date: "06 JUL (MON)", title: "Changi Airport Outbound Corridor", weather: "27°C · Tropical & humid — welcome back to SG!",
+        items: [
+            { time: "06:00 AM", desc: "Early rise — final apartment walk-through.", tag: "home", icon: "fa-broom", duration: "1 hour" },
+            { time: "07:00 AM", desc: "Drive to T1 terminal; return the Kia Carnival to H20 Rentals.", address: "Perth International Airport Terminal 1, Horrie Miller Dr", tag: "drive", icon: "fa-car-side", duration: "20 mins", tip: "Clear all personal items from the car before handback!" },
+            { time: "07:20 AM", desc: "Check-in baggage (strict checks: Sue 30kg, others 25kg max).", tag: "drive", icon: "fa-suitcase-rolling", duration: "55 mins", tip: "Scoot is strict on weight — check bags at the hotel if possible!" },
+            { time: "08:15 AM", desc: "Breakfast at Co & Co cafe.", tag: "food", icon: "fa-mug-hot", duration: "1h 40m" },
+            { time: "09:55 AM", desc: "Scoot Flight TR17 departs for Singapore. Landing scheduled 03:15 PM.", tag: "drive", icon: "fa-plane", duration: "5h 20m", fact: "TR17 is the final leg of your 'Winter' Expedition '26. Safe travels!" }
+        ]
+    }
+];
+
+const categoryMeta = {
+    food:    { label: "Food & Drink",  icon: "fa-utensils" },
+    explore: { label: "Explore",       icon: "fa-mountain-sun" },
+    shop:    { label: "Shopping",      icon: "fa-bag-shopping" },
+    drive:   { label: "Transit",       icon: "fa-route" },
+    home:    { label: "Home Base",     icon: "fa-house" },
+    booking: { label: "Reservations",  icon: "fa-bell-concierge" }
+};
+
+const packingItems = [
+    { icon: "fa-vest", label: "Waterproof jacket / windbreaker" },
+    { icon: "fa-shirt", label: "Warm layers — WA winter is 8–19°C" },
+    { icon: "fa-mug-hot", label: "Beanie & gloves for early hikes" },
+    { icon: "fa-boot", label: "Comfortable walking shoes (Bells Rapids hike, jetty walks)" },
+    { icon: "fa-umbrella", label: "Compact umbrella — Day 2 has a 40% rain chance" },
+    { icon: "fa-bag-shopping", label: "Reusable tote for chocolate/wine/cheese hauls" },
+    { icon: "fa-camera", label: "Camera for Cape Leeuwin & Busselton Jetty" },
+    { icon: "fa-passport", label: "Passports, boarding passes, booking refs" },
+    { icon: "fa-wallet", label: "AUD cash for farmers markets" },
+    { icon: "fa-suitcase-rolling", label: "Spare packing cubes — lots of market hauls!" }
+];
+
+let currentActiveDay = 1;
+let activeCategories = new Set(Object.keys(categoryMeta));
+const loggedStops = new Set();
+
+function initializeJournal() {
+    generateCarouselPills();
+    generateCategoryFilters();
+    switchJournalDay(1);
+    initializeTimer();
+    initWeatherStrip();
+    initPacking();
+    updateProgressFab();
+
+    document.getElementById('prevBtn').onclick = () => {
+        if (currentActiveDay > 1) { currentActiveDay--; switchJournalDay(currentActiveDay); }
+    };
+    document.getElementById('nextBtn').onclick = () => {
+        if (currentActiveDay < dynamicItinerary.length) { currentActiveDay++; switchJournalDay(currentActiveDay); }
+    };
+}
+
+function generateCarouselPills() {
+    const wrapper = document.getElementById('carouselContainer');
+    wrapper.innerHTML = '';
+    dynamicItinerary.forEach(d => {
+        const pill = document.createElement('button');
+        pill.className = `nav-pill ${d.day === currentActiveDay ? 'active' : ''}`;
+        pill.innerHTML = `Day ${d.day}<span>${d.date.split(' ')[0]}</span>`;
+        pill.onclick = () => {
+            currentActiveDay = d.day;
+            switchJournalDay(d.day);
+        };
+        wrapper.appendChild(pill);
+    });
+}
+
+function generateCategoryFilters() {
+    const wrapper = document.getElementById('categoryFilters');
+    wrapper.innerHTML = '';
+    Object.entries(categoryMeta).forEach(([key, meta]) => {
+        const chip = document.createElement('div');
+        chip.className = `cat-chip ${key} active`;
+        chip.innerHTML = `<i class="fa-solid ${meta.icon}"></i> ${meta.label}`;
+        chip.onclick = () => {
+            if (activeCategories.has(key)) {
+                activeCategories.delete(key);
+                chip.classList.remove('active');
+            } else {
+                activeCategories.add(key);
+                chip.classList.add('active');
+            }
+            renderDay(currentActiveDay);
+        };
+        wrapper.appendChild(chip);
+    });
+}
+
+function switchJournalDay(targetDayId) {
+    document.querySelectorAll('.nav-pill').forEach((p, idx) => {
+        const isActive = idx + 1 === targetDayId;
+        p.classList.toggle('active', isActive);
+        if (isActive) p.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    });
+    renderDay(targetDayId);
+    window.scrollTo({ top: document.querySelector('.filter-bar').offsetHeight, behavior: 'smooth' });
+}
+
+function renderDay(targetDayId) {
+    const selectedData = dynamicItinerary.find(d => d.day === targetDayId);
+    if (!selectedData) return;
+
+    document.getElementById('heroDate').innerText = selectedData.date;
+    document.getElementById('heroTitle').innerText = selectedData.title;
+
+    // day stats
+    const visibleItems = selectedData.items.filter(ev => activeCategories.has(ev.tag));
+    const mealCount = selectedData.items.filter(ev => ev.tag === 'food').length;
+    const driveCount = selectedData.items.filter(ev => ev.tag === 'drive').length;
+    document.getElementById('dayStats').innerHTML = `
+        <div class="day-stat-box"><span class="num">${selectedData.items.length}</span><span class="lbl">Stops</span></div>
+        <div class="day-stat-box highlight"><span class="num">${mealCount}</span><span class="lbl">Food Stops</span></div>
+        <div class="day-stat-box highlight2"><span class="num">${selectedData.weather.split('·')[0].trim()}</span><span class="lbl">Forecast</span></div>
+    `;
+
+    const cardsTimeline = document.getElementById('nodesContainer');
+    cardsTimeline.innerHTML = '';
+
+    if (visibleItems.length === 0) {
+        cardsTimeline.innerHTML = `<div style="text-align:center; padding:2rem; color:var(--ink-soft); font-style:italic;">No stops match the selected filters for this day.</div>`;
+        return;
+    }
+
+    visibleItems.forEach((ev, idx) => {
+        const stopKey = `d${targetDayId}_${idx}_${ev.time}`;
+        const node = document.createElement('div');
+        node.className = 'story-node';
+
+        const meta = categoryMeta[ev.tag] || categoryMeta.home;
+
+        let mapsAnchorSnippet = '';
+        let copyAddrSnippet = '';
+        if (ev.address) {
+            const dynamicUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.address)}`;
+            mapsAnchorSnippet = `<a href="${dynamicUrl}" target="_blank" class="action-btn"><i class="fa-solid fa-location-arrow"></i> Open Map</a>`;
+            copyAddrSnippet = `<button class="action-btn copy-addr-btn" data-addr="${ev.address.replace(/"/g, '&quot;')}"><i class="fa-regular fa-copy"></i> Copy Address</button>`;
+        }
+
+        const durationSnippet = ev.duration ? `<div class="node-duration"><i class="fa-regular fa-clock"></i> ${ev.duration}</div>` : '';
+        const tipSnippet = ev.tip ? `<div class="node-tip"><i class="fa-solid fa-circle-info"></i> ${ev.tip}</div>` : '';
+        const factSnippet = ev.fact ? `<div class="node-fact"><i class="fa-solid fa-lightbulb"></i> Did you know? ${ev.fact}</div>` : '';
+        const altSnippet = ev.alt ? `<div class="node-alt"><i class="fa-solid fa-cloud-rain"></i> ${ev.alt}</div>` : '';
+
+        node.innerHTML = `
+            <div class="node-marker">
+                <div class="node-icon-circle ${ev.tag}"><i class="fa-solid ${ev.icon}"></i></div>
+            </div>
+            <div class="node-card ${ev.tag}" data-stopkey="${stopKey}">
+                <div class="node-header">
+                    <div class="node-time">${ev.time}</div>
+                    <div class="node-tag ${ev.tag}">${meta.label}</div>
+                </div>
+                <div class="node-body">
+                    ${ev.desc}
+                    ${durationSnippet}
+                    ${tipSnippet}
+                    ${factSnippet}
+                    ${altSnippet}
+                    <div class="node-actions">
+                        ${mapsAnchorSnippet}
+                        ${copyAddrSnippet}
+                    </div>
+                </div>
+            </div>
+        `;
+        cardsTimeline.appendChild(node);
+    });
+
+    // wire copy buttons
+    cardsTimeline.querySelectorAll('.copy-addr-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const addr = btn.getAttribute('data-addr');
+            navigator.clipboard?.writeText(addr).then(() => {
+                btn.classList.add('copied');
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Address';
+                }, 1500);
+            });
+            const card = btn.closest('.node-card');
+            loggedStops.add(card.dataset.stopkey);
+            updateProgressFab();
+        });
+    });
+
+    cardsTimeline.querySelectorAll('.node-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.action-btn')) return;
+            loggedStops.add(card.dataset.stopkey);
+            card.style.opacity = '0.7';
+            updateProgressFab();
+        });
+    });
+}
+
+function updateProgressFab() {
+    document.getElementById('progressText').textContent = `${loggedStops.size} stops logged`;
+}
+
+function initWeatherStrip() {
+    const selectedData = dynamicItinerary[0];
+    const strip = document.getElementById('weatherStrip');
+    strip.innerHTML = `<i class="fa-solid fa-cloud-sun"></i> WA Winter Outlook: <b>8–19°C</b> across the trip · Pack layers + a light rain shell · Day 2 has the highest rain chance (40%)`;
+}
+
+function initPacking() {
+    const list = document.getElementById('packingList');
+    list.innerHTML = packingItems.map((item, i) => `
+        <div class="packing-item" data-idx="${i}">
+            <div class="packing-checkbox"></div>
+            <i class="fa-solid ${item.icon}" style="color:var(--c-explore); width:18px;"></i>
+            <span class="plabel">${item.label}</span>
+        </div>
+    `).join('');
+
+    list.querySelectorAll('.packing-item').forEach(el => {
+        el.addEventListener('click', () => el.classList.toggle('checked'));
+    });
+
+    document.getElementById('packingToggle').addEventListener('click', () => {
+        const isOpen = list.classList.toggle('open');
+        document.getElementById('packingToggle').innerHTML = isOpen
+            ? '<i class="fa-solid fa-xmark"></i> Close Packing Checklist'
+            : '<i class="fa-solid fa-suitcase"></i> Open Smart Packing Checklist';
+    });
+}
+
+function initializeTimer() {
+    const launchDate = new Date("June 26, 2026 09:00:00").getTime();
+
+    function updateClock() {
+        const present = new Date().getTime();
+        const remainder = launchDate - present;
+        const clockEl = document.getElementById('clock');
+
+        if (remainder < 0) {
+            clockEl.innerHTML = '<i class="fa-solid fa-plane-departure"></i> Expedition is active';
+            return;
+        }
+        const dayCounts = Math.floor(remainder / (1000 * 60 * 60 * 24));
+        const label = dayCounts === 1 ? "Day" : "Days";
+        clockEl.innerHTML = `<i class="fa-solid fa-plane-departure"></i> ${dayCounts} ${label} to Departure`;
+    }
+
+    updateClock();
+    setInterval(updateClock, 60000);
+}
+
+window.onload = initializeJournal;
+</script>
+</body>
+</html>
