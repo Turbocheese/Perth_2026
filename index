@@ -140,9 +140,528 @@ header p.subtitle {
 .hstat.c-departure { border-color: var(--c-home); color: var(--c-home); }
 .hstat.c-people { border-color: var(--c-explore); color: var(--c-explore); }
 .hstat.c-distance { border-color: var(--c-drive); color: var(--c-drive); }
+<div class="route-overview">
+    <button class="route-btn" onclick="toggleRouteMap()">
+        <i class="fa-solid fa-map-location-dot"></i> View Full Route Map & Itinerary
+    </button>
+    <div class="route-map-container" id="mapContainer">
+        <div class="custom-route-map">
+            
+            <!-- DAY 1: SINGAPORE TO MARGARET RIVER -->
+            <div class="route-stop" data-day="1">
+                <div class="stop-marker singapore">🇸🇬</div>
+                <div class="stop-info">
+                    <strong>Day 1: Singapore Changi Airport T1</strong>
+                    <span>09:30 AM Departure - Scoot TR8 to Perth</span>
+                </div>
+            </div>
+            
+            <div class="route-connector flight"></div>
+            
+            <div class="route-stop" data-day="1">
+                <div class="stop-marker perth">✈️</div>
+                <div class="stop-info">
+                    <strong>Day 1: Perth International Airport T1</strong>
+                    <span>05:10 PM Arrival - Car pickup & drive south</span>
+                </div>
+            </div>
+            
+            <div class="route-sub-stops">
+                <div class="sub-stop">🍔 Grill'd Mandurah (Dinner to go)</div>
+            </div>
+            
+            <div class="route-connector drive"></div>
+            
+            <div class="route-stop" data-day="1-5">
+                <div class="stop-marker margaret">🏠</div>
+                <div class="stop-info">
+                    <strong>Days 1-5: Margaret River Airbnb Base</strong>
+                    <span>Apartment 4, 16 Town View Terrace, Margaret River</span>
+                </div>
+            </div>
+
+            <!-- DAY 2: LIGHTHOUSES & CAVES -->
+            <div class="route-day-divider">📅 Day 2: Provisions, Lighthouses & Caves</div>
+            
+            <div class="route-sub-stops day-highlights">
+                <div class="sub-stop">🥕 Margaret River Farmers Market - Breakfast & picnic shopping</div>
+                <div class="sub-stop">🗼 Cape Leeuwin Lighthouse - Continent's SW tip, 176 steps to top</div>
+                <div class="sub-stop">💎 Jewel Cave - Largest show cave in WA</div>
+                <div class="sub-stop">🛒 Woolworths Margaret River - Grocery run</div>
+                <div class="sub-stop">⛽ Shell Fuel Station</div>
+                <div class="sub-stop">🍕 Swings & Roundabouts - Dinner reservation</div>
+            </div>
+
+            <!-- DAY 3: WITCHCLIFFE VINTAGE TRAIL -->
+            <div class="route-day-divider">📅 Day 3: Witchcliffe Vintage Trail & Caves</div>
+            
+            <div class="route-sub-stops day-highlights">
+                <div class="sub-stop">⛪ Augusta Margaret River Catholic Parish - 10 AM Mass</div>
+                <div class="sub-stop">🍜 Dear Darnell's, Witchcliffe - Early lunch</div>
+                <div class="sub-stop">👕 Vintage Loop: Beanhead Records, LucyKat, Poolroom Vintage, The Tiny Store, The Flying Wardrobe, Lime Beach Reloved</div>
+                <div class="sub-stop">☕ Witchy Brews Café - Coffee pause</div>
+                <div class="sub-stop">🦣 Mammoth Cave - Self-guided audio tour</div>
+                <div class="sub-stop">🍷 Mr Barval Fine Wines - Wine tasting</div>
+                <div class="sub-stop">🐟 Hooked Up Fish & Chips, Prevelly - Sunset at Surfers Point</div>
+            </div>
+
+            <!-- DAY 4: YALLINGUP SWEETS -->
+            <div class="route-day-divider">📅 Day 4: Yallingup Sweets & Dunsborough Books</div>
+            
+            <div class="route-sub-stops day-highlights">
+                <div class="sub-stop">🥐 Gourmet Food Merchant, Cowaramup - Breakfast</div>
+                <div class="sub-stop">🍫 Gabriel Chocolate, Margaret River Chocolate, Wulura Olive Oil</div>
+                <div class="sub-stop">🍺 Wild Hop Brewing Company, Yallingup - Lunch</div>
+                <div class="sub-stop">📚 Dunsborough: Lions Shed, Cape Emporium, Dunsborough Books</div>
+                <div class="sub-stop">☕ Cape Lavender - Devonshire tea & scones</div>
+                <div class="sub-stop">🛒 Woolworths Margaret River - Dinner groceries</div>
+                <div class="sub-stop">🍾 Margaret River Liquor Merchants - Wine pickup</div>
+            </div>
+
+            <!-- DAY 5: NORTHERN CAPES & BUSSELTON -->
+            <div class="route-day-divider">📅 Day 5: Northern Capes & Busselton Jetty</div>
+            
+            <div class="route-sub-stops day-highlights">
+                <div class="sub-stop">☕ Red Feather Coffee, Cowaramup - Coffee & toasties</div>
+                <div class="sub-stop">🐄 Cowaramup: Mukau Giftware, Candy Cow, Temper Temper Chocolate</div>
+                <div class="sub-stop">🍸 After Hours Wine / Gindong Gin - Tastings</div>
+                <div class="sub-stop">🍽️ Origins Market Busselton - Lunch food court</div>
+                <div class="sub-stop">🌊 Busselton Jetty - 1.8km walk (longest wooden jetty in Southern Hemisphere)</div>
+                <div class="sub-stop">📖 Busselton Books & The Good Egg Café</div>
+                <div class="sub-stop">🛒 Woolworths Busselton Kent St - Groceries</div>
+                <div class="sub-stop">⛽ BP Busselton - Fuel top-up</div>
+                <div class="sub-stop">🍔 Burger Baby Margaret River - Dinner reservation</div>
+            </div>
+
+            <div class="route-connector drive"></div>
+
+            <!-- DAY 6: RETURN TO PERTH -->
+            <div class="route-stop" data-day="6">
+                <div class="stop-marker transit">🚗</div>
+                <div class="stop-info">
+                    <strong>Day 6: Northbound Return to Perth City</strong>
+                    <span>Margaret River → Bunbury → Harvey → Pinjarra → Perth</span>
+                </div>
+            </div>
+            
+            <div class="route-sub-stops day-highlights">
+                <div class="sub-stop">☕ Red Feather Coffee, Cowaramup - Drive-thru breakfast</div>
+                <div class="sub-stop">🦘 Bunbury Wildlife Park - Hand-feed kangaroos (60+ native species)</div>
+                <div class="sub-stop">🍜 Bunbury Ramen Plus - Lunch</div>
+                <div class="sub-stop">🧀 Harvey Cheese - Cheese & ice cream stop</div>
+                <div class="sub-stop">🕰️ Blue Moon Collectables, Pinjarra - Antiques browsing</div>
+            </div>
+
+            <div class="route-connector drive"></div>
+
+            <div class="route-stop" data-day="6-11">
+                <div class="stop-marker perth-city">🏙️</div>
+                <div class="stop-info">
+                    <strong>Days 6-11: Perth City Airbnb Base</strong>
+                    <span>15B Esperance St, East Victoria Park</span>
+                </div>
+            </div>
+            
+            <div class="route-sub-stops">
+                <div class="sub-stop">🍗 South Perth Fish & Chips + Charcoal Chicken - Day 6 dinner</div>
+            </div>
+
+            <!-- DAY 7: BELLS RAPIDS HIKING -->
+            <div class="route-day-divider">📅 Day 7: River Rapids Hiking & Valley Crafts</div>
+            
+            <div class="route-sub-stops day-highlights">
+                <div class="sub-stop">🥾 Bells Rapids Park, Brigadoon - River Walk & Goat Trail (3km hike)</div>
+                <div class="sub-stop">🍕 Gerry's Deli & Pizzeria, Henley Brook - Pizza lunch</div>
+                <div class="sub-stop">🏺 The Barn @ Taylor's, Middle Swan - Antiques</div>
+                <div class="sub-stop">🍷 Garbin Estate Wines, Middle Swan - Wine tasting</div>
+                <div class="sub-stop">🕰️ Annie's COLLECTIVE Wonderland, Bellevue - Antiquing</div>
+                <div class="sub-stop">📚 Guildford: Georges Furniture Restoration, Guildford Book Exchange</div>
+                <div class="sub-stop">🛒 Woolworths Perth Airport - Grocery run</div>
+                <div class="sub-stop">⛽ Costco Wholesale Fuel - Fuel top-up</div>
+                <div class="sub-stop">🍱 Izakaya Tori Victoria Park - Dinner reservation</div>
+            </div>
+
+            <!-- DAY 8: FREMANTLE PORT -->
+            <div class="route-day-divider">📅 Day 8: Port Fremantle Record & Brew Strolls</div>
+            
+            <div class="route-sub-stops day-highlights">
+                <div class="sub-stop">🥚 Eggspot Fremantle - Standing breakfast</div>
+                <div class="sub-stop">☕ The Coffee Connection - Coffee browsing</div>
+                <div class="sub-stop">🎵 Fremantle Walk: Mills Records, High Street Mall, Elizabeth's Secondhand Bookshop</div>
+                <div class="sub-stop">🍔 Grill'd Fremantle - Burgers</div>
+                <div class="sub-stop">👕 Common Ground, Ginger Pudding Vintage, Bill Campbell Books, The Record Finder</div>
+                <div class="sub-stop">🥐 Common Bakery Fremantle - Cuppa break</div>
+                <div class="sub-stop">🍺 Little Creatures Brewery - Pints at the iconic boat shed</div>
+                <div class="sub-stop">🦆 Jumbo BBQ Roast Duck House, Bentley - Dinner with Shirley & Daniel</div>
+            </div>
+
+            <!-- DAY 9: SUBIACO & SHOPPING -->
+            <div class="route-day-divider">📅 Day 9: Subiaco Mornings & Fruit Orchards</div>
+            
+            <div class="route-sub-stops day-highlights">
+                <div class="sub-stop">🥕 Subiaco Farmers Market - Breakfast & coffee</div>
+                <div class="sub-stop">🍓 Hoang Le's Strawberries, Wanneroo - Strawberry picking</div>
+                <div class="sub-stop">🥗 Pink Moon & Co., Balcatta - Lunch</div>
+                <div class="sub-stop">🛍️ Karrinyup Shopping Centre - Lululemon, Lorna Jane, Uniqlo</div>
+                <div class="sub-stop">🛒 Woolworths Karrinyup - Dinner groceries</div>
+            </div>
+
+            <!-- DAY 10: SUNDAY PARISH & SEASIDE -->
+            <div class="route-day-divider">📅 Day 10: Sunday Parish & Seaside Farewells</div>
+            
+            <div class="route-sub-stops day-highlights">
+                <div class="sub-stop">⛪ Sunday Parish Mass, Willetton - 09:00 AM</div>
+                <div class="sub-stop">🥕 Freo Farmers Market, Bruce Lee Oval - Breakfast</div>
+                <div class="sub-stop">👗 The Gossamer Project, South Fremantle - Final vintage stop</div>
+                <div class="sub-stop">🦞 The Pickled Octopus Food Truck, Dog Beach - Seafood lunch on sand</div>
+                <div class="sub-stop">⛽ Shell Bentley - Final fuel top-off</div>
+                <div class="sub-stop">🍪 San Churro East Victoria Park - Churros & chocolate</div>
+                <div class="sub-stop">🥂 Salt & Pepper Grill, Kensington - Finale dinner (table for 5)</div>
+            </div>
+
+            <div class="route-connector drive"></div>
+
+            <!-- DAY 11: DEPARTURE -->
+            <div class="route-stop" data-day="11">
+                <div class="stop-marker departure">🛫</div>
+                <div class="stop-info">
+                    <strong>Day 11: Perth Airport Departure</strong>
+                    <span>07:00 AM Car return, 09:55 AM Scoot TR17 to Singapore</span>
+                </div>
+            </div>
+            
+            <div class="route-sub-stops">
+                <div class="sub-stop">☕ Co & Co Cafe - Airport breakfast</div>
+            </div>
+
+            <div class="route-connector flight"></div>
+
+            <div class="route-stop" data-day="11">
+                <div class="stop-marker singapore">🇸🇬</div>
+                <div class="stop-info">
+                    <strong>Day 11: Singapore Changi Airport</strong>
+                    <span>03:15 PM Arrival - Welcome home! 🏠</span>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="map-stats-grid">
+            <div class="map-stat">
+                <div class="stat-icon">📍</div>
+                <div class="stat-value">80+</div>
+                <div class="stat-label">Unique Locations</div>
+            </div>
+            <div class="map-stat">
+                <div class="stat-icon">🚗</div>
+                <div class="stat-value">~850km</div>
+                <div class="stat-label">Total Driving</div>
+            </div>
+            <div class="map-stat">
+                <div class="stat-icon">✈️</div>
+                <div class="stat-value">10h 30m</div>
+                <div class="stat-label">Flight Time</div>
+            </div>
+            <div class="map-stat">
+                <div class="stat-icon">🏙️</div>
+                <div class="stat-value">2 Regions</div>
+                <div class="stat-label">Margaret River + Perth</div>
+            </div>
+        </div>
+        
+        <div class="map-actions">
+            <a href="https://www.google.com/maps/dir/Singapore+Changi+Airport,+Singapore/Perth+Airport,+Perth+WA/Grill'd+Mandurah,+Mandurah+WA/Margaret+River+WA/Cape+Leeuwin+Lighthouse,+Augusta+WA/Jewel+Cave,+Deepdene+WA/Mammoth+Cave,+Forest+Grove+WA/Busselton+Jetty,+Busselton+WA/Bunbury+Wildlife+Park,+South+Bunbury+WA/Harvey+Cheese,+Wokalup+WA/East+Victoria+Park+WA/Bells+Rapids+Park,+Brigadoon+WA/Swan+Valley,+WA/Fremantle+WA/Subiaco+Farmers+Market,+Subiaco+WA/Perth+Airport,+Perth+WA/Singapore+Changi+Airport" 
+               target="_blank" 
+               class="map-link-btn">
+                <i class="fa-solid fa-map-marked-alt"></i> Open Full Multi-Stop Route in Google Maps
+            </a>
+        </div>
+        
+        <p class="map-caption">
+            <i class="fa-solid fa-route"></i> 
+            Complete Journey: SIN → PER (5h 10m) → Margaret River Region (280km) → Perth Metro (280km) → PER → SIN (5h 20m)
+        </p>
+    </div>
+</div>
+
+<style>
+.custom-route-map {
+    background: linear-gradient(180deg, #E6EFF3 0%, #F4F8FA 100%);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    max-height: 600px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.custom-route-map::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-route-map::-webkit-scrollbar-track {
+    background: var(--paper);
+    border-radius: 10px;
+}
+
+.custom-route-map::-webkit-scrollbar-thumb {
+    background: var(--c-drive);
+    border-radius: 10px;
+}
+
+.route-stop {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+.stop-marker {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border: 3px solid #fff;
+    background: var(--card);
+}
+
+.stop-marker.singapore { background: linear-gradient(135deg, #ED2939 0%, #C8102E 100%); }
+.stop-marker.perth { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); }
+.stop-marker.margaret { background: linear-gradient(135deg, #8B4789 0%, #6B2869 100%); }
+.stop-marker.perth-city { background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%); }
+.stop-marker.transit { background: linear-gradient(135deg, #5B8AA6 0%, #4A7A96 100%); }
+.stop-marker.departure { background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%); }
+
+.stop-info {
+    flex: 1;
+    background: var(--card);
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    border: 2px solid var(--line);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+}
+
+.stop-info:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.stop-info strong {
+    display: block;
+    font-size: 1.05rem;
+    color: var(--ink);
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+
+.stop-info span {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+}
+
+.route-connector {
+    width: 4px;
+    height: 40px;
+    background: repeating-linear-gradient(
+        to bottom,
+        var(--c-drive) 0,
+        var(--c-drive) 8px,
+        transparent 8px,
+        transparent 16px
+    );
+    margin: 0 auto 0 26px;
+    position: relative;
+    z-index: 1;
+}
+
+.route-connector.flight {
+    background: repeating-linear-gradient(
+        to bottom,
+        var(--c-home) 0,
+        var(--c-home) 12px,
+        transparent 12px,
+        transparent 24px
+    );
+    height: 60px;
+}
+
+.route-connector.drive {
+    background: repeating-linear-gradient(
+        to bottom,
+        var(--c-drive) 0,
+        var(--c-drive) 6px,
+        transparent 6px,
+        transparent 12px
+    );
+    height: 50px;
+}
+
+.route-day-divider {
+    background: linear-gradient(135deg, var(--c-booking-bg) 0%, var(--c-home-bg) 100%);
+    border: 2px solid var(--c-booking);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    margin: 1.5rem 0 1rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--ink);
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(185,145,44,0.15);
+}
+
+.route-sub-stops {
+    margin: 0.5rem 0 0.5rem 4.5rem;
+    padding: 1rem 1.2rem;
+    background: rgba(255,255,255,0.8);
+    border-left: 3px solid var(--c-explore);
+    border-radius: 8px;
+}
+
+.route-sub-stops.day-highlights {
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(231,240,234,0.6) 100%);
+    border-left: 4px solid var(--c-explore);
+    padding: 1.2rem;
+}
+
+.sub-stop {
+    font-size: 0.88rem;
+    color: var(--ink);
+    padding: 0.5rem 0;
+    font-weight: 500;
+    border-bottom: 1px dashed var(--line);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.sub-stop:last-child {
+    border-bottom: none;
+}
+
+.map-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+}
+
+.map-stat {
+    text-align: center;
+    padding: 1rem 0.5rem;
+    background: var(--paper);
+    border-radius: 10px;
+    transition: all 0.2s;
+}
+
+.map-stat:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+
+.map-stat .stat-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.map-stat .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--c-drive);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+}
+
+.map-stat .stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    font-weight: 600;
+}
+
+.map-actions {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.map-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--c-drive) 0%, var(--c-explore) 100%);
+    color: #fff;
+    padding: 1rem 1.6rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(91,138,166,0.3);
+}
+
+.map-link-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(91,138,166,0.45);
+}
+
+.map-actions + .map-caption {
+    margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+    .custom-route-map {
+        padding: 1.5rem 1rem;
+        max-height: 500px;
+    }
+    
+    .route-sub-stops,
+    .route-sub-stops.day-highlights {
+        margin-left: 2.5rem;
+        padding: 0.8rem 1rem;
+    }
+    
+    .sub-stop {
+        font-size: 0.82rem;
+    }
+    
+    .map-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        padding: 1rem;
+    }
+    
+    .map-stat .stat-icon {
+        font-size: 1.6rem;
+    }
+    
+    .map-stat .stat-value {
+        font-size: 1.2rem;
+    }
+    
+    .route-day-divider {
+        font-size: 0.85rem;
+        padding: 0.6rem 0.8rem;
+    }
+}
+</style>
 
 /* ===== WEATHER STRIP ===== */
-.weather-strip {
+.-strip {
   background: var(--ink);
   color: var(--paper);
   padding: 0.7rem 1.25rem;
